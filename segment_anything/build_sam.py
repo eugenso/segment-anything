@@ -58,6 +58,7 @@ def _build_sam(
     encoder_num_heads,
     encoder_global_attn_indexes,
     checkpoint=None,
+    direct_file=False,
 ):
     prompt_embed_dim = 256
     image_size = 1024
@@ -101,7 +102,10 @@ def _build_sam(
     )
     sam.eval()
     if checkpoint is not None:
-        with open(checkpoint, "rb") as f:
-            state_dict = torch.load(f)
+        if direct_file == True:
+            state_dict = torch.load(checkpoint)
+        else:
+            with open(checkpoint, "rb") as f:
+                state_dict = torch.load(f)
         sam.load_state_dict(state_dict)
     return sam
