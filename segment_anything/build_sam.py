@@ -114,7 +114,7 @@ def _build_sam(
         else:
             with open(checkpoint, "rb") as f:
                 if cpu:
-                    state_dict = torch.load(f,  map_location=lambda storage, loc: 'cpu')
+                    state_dict = torch.load(f,  map_location=lambda storage, loc: storage)
                 else:
                     state_dict = torch.load(f)
         sam.load_state_dict(state_dict)
