@@ -11,7 +11,7 @@ from functools import partial
 from .modeling import ImageEncoderViT, MaskDecoder, PromptEncoder, Sam, TwoWayTransformer
 
 
-def build_sam_vit_h(checkpoint=None, direct_file=False,):
+def build_sam_vit_h(checkpoint=None, direct_file=False, cpu=False):
     return _build_sam(
         encoder_embed_dim=1280,
         encoder_depth=32,
@@ -62,6 +62,7 @@ def _build_sam(
     encoder_global_attn_indexes,
     checkpoint=None,
     direct_file=False,
+    cpu=False,
 ):
     prompt_embed_dim = 256
     image_size = 1024
@@ -109,6 +110,9 @@ def _build_sam(
             state_dict = torch.load(checkpoint)
         else:
             with open(checkpoint, "rb") as f:
-                state_dict = torch.load(f)
+                if cpu:
+                    state_dict = torch.load(f,  map_location=lambda storage, loc: 'cpu')
+                else:
+                    state_dict = torch.load(f)
         sam.load_state_dict(state_dict)
     return sam
