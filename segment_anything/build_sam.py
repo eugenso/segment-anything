@@ -19,13 +19,14 @@ def build_sam_vit_h(checkpoint=None, direct_file=False, cpu=False):
         encoder_global_attn_indexes=[7, 15, 23, 31],
         checkpoint=checkpoint,
         direct_file=direct_file,
+        cpu=cpu,
     )
 
 
 build_sam = build_sam_vit_h
 
 
-def build_sam_vit_l(checkpoint=None, direct_file=False,):
+def build_sam_vit_l(checkpoint=None, direct_file=False, cpu=False, ):
     return _build_sam(
         encoder_embed_dim=1024,
         encoder_depth=24,
@@ -33,10 +34,11 @@ def build_sam_vit_l(checkpoint=None, direct_file=False,):
         encoder_global_attn_indexes=[5, 11, 17, 23],
         checkpoint=checkpoint,
         direct_file=direct_file,
+        cpu=cpu,
     )
 
 
-def build_sam_vit_b(checkpoint=None, direct_file=False,):
+def build_sam_vit_b(checkpoint=None, direct_file=False, cpu=False,):
     return _build_sam(
         encoder_embed_dim=768,
         encoder_depth=12,
@@ -44,6 +46,7 @@ def build_sam_vit_b(checkpoint=None, direct_file=False,):
         encoder_global_attn_indexes=[2, 5, 8, 11],
         checkpoint=checkpoint,
         direct_file=direct_file,
+        cpu=cpu,
     )
 
 
